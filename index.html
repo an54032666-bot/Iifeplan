@@ -53,70 +53,84 @@ label{font-size:14px}
 .diagnostic-lines{display:grid;gap:9px;margin-top:11px}.diagnostic-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:1px solid #e7edf5;padding-bottom:9px;font-size:13px;line-height:1.5}.diagnostic-row:last-child{border-bottom:0;padding-bottom:0}.diagnostic-row span{color:#667085;flex:1}.diagnostic-row b{color:#182b49;text-align:right;max-width:57%;overflow-wrap:anywhere}.diagnostic-note{font-size:11px;color:#8290a4;line-height:1.55;margin-top:9px}/* Compact, printable personalized retirement report */
 .report-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}.report-metric{background:#f5f8ff;border:1px solid #e8eef9;border-radius:15px;padding:15px 12px}.report-metric small{font-size:11px;margin:0;color:#667085}.report-metric strong{display:block;margin-top:7px;font-size:20px;color:#245ac5;letter-spacing:-.5px;overflow-wrap:anywhere}.report-verdict{padding:16px;border-radius:16px;background:#edf5ff;border:1px solid #dbe9ff}.report-verdict strong{display:block;color:#2059c4;font-size:19px;margin-bottom:5px}.report-verdict p{margin:0;font-size:13px}.report-next{padding:15px 17px;background:#f8fafc;border-radius:14px;margin-top:13px}.report-next b{font-size:14px}.report-next p{margin:5px 0 0;font-size:13px}.report-meta{font-size:11px;color:#8591a2;line-height:1.6;margin-top:14px}@media print{#reportCard{break-inside:avoid}#reportCard .btn{display:none!important}}
 .house-toggle{display:flex;align-items:center;gap:12px;font-weight:750;margin:20px 0;cursor:pointer}.house-toggle input{width:22px;height:22px;accent-color:#2b76e5}.house-toggle+div{margin-top:8px}#housingCard .stat{margin:18px 0}#housingCard small{display:block;margin:8px 0;line-height:1.65}
+/* Short input guidance directly above the field */
+.quiz-input-hint{font-size:14px;color:#8491a5;line-height:1.65;margin:17px 0 9px;font-weight:400}
+/* Unit suffix stays visible while editing */
+.money-input{position:relative}.money-input input{padding-right:72px}.money-input .money-unit{position:absolute;right:17px;top:50%;transform:translateY(-50%);font-weight:750;font-size:15px;color:#68788f;pointer-events:none}.money-input input:focus+.money-unit{color:#2764e7}
+
+.shortfall-card{margin:12px 0;padding:22px 20px;border-radius:19px;background:linear-gradient(135deg,#fff1f1,#fff8f8);border:1px solid #ffd9dc}
+.shortfall-card .shortfall-caption{font-size:14px;font-weight:800;color:#a82b3d}
+.shortfall-card b{display:block;font-size:34px;letter-spacing:-1.5px;color:#df354b;margin:8px 0}
+.shortfall-card small{color:#8c5a62;font-size:12px}
+.shortfall-card.changed{background:linear-gradient(135deg,#fff4e6,#fffbf5);border-color:#ffdfb9}
+.shortfall-card.changed .shortfall-caption,.shortfall-card.changed b{color:#cf7116}
+.shortfall-card.changed small{color:#a4764e}
+.apply-result{margin:20px 0 6px}
+.pending-hint{color:#d36a19;font-weight:700;min-height:18px}
 </style></head><body><main><div class="brand">라이프플랜 <span style="margin-left:auto;font-size:12px;color:#8792a6;font-weight:500">나를 위한 은퇴 준비</span></div>
 <section id="home" class="card"><div class="eyebrow">✦ 5분이면 충분해요</div><h1>내 노후,<br>지금부터 준비하면<br>어떻게 달라질까요?</h1><p>간단한 입력으로 확인하는 나의 은퇴 준비</p><div style="height:38px"></div><button class="btn" onclick="start()">내 미래 확인하기 &nbsp; →</button><small>회원가입 없이 바로 시작 · 입력 내용은 외부로 전송되지 않아요</small></section>
-<section id="quiz" class="card hidden"><div class="eyebrow" id="stepLabel"></div><div class="progress"><div class="bar" id="bar"></div></div><h2 id="question"></h2><p id="hint"></p><div id="field"></div><div id="workPensionOptions" class="hidden">
+<section id="quiz" class="card hidden"><div class="eyebrow" id="stepLabel"></div><div class="progress"><div class="bar" id="bar"></div></div><h2 id="question"></h2><div id="field"></div><p id="hint"></p><div id="workPensionOptions" class="hidden">
 <div class="pension-choice worktype-grid">
 <label><input type="radio" name="workType" value="db" onchange="updateWorkFields()"><span>🏢 DB형<small>회사가 퇴직급여를 책임져요</small></span></label>
 <label><input type="radio" name="workType" value="dc" onchange="updateWorkFields()"><span>📈 DC형<small>회사가 적립하고 내가 운용해요</small></span></label>
 <label><input type="radio" name="workType" value="unknown" onchange="updateWorkFields()"><span>❔ 모르겠어요 / 해당 없어요<small>퇴직급여 계산 제외</small></span></label>
 </div>
 <div id="workDBFields" class="extra-fields hidden">
-<label>현재 월급 (세전, 만원)</label><input type="number" id="workSalary" min="0" step="1" value="300" inputmode="decimal">
-<label>퇴직 시 예상 총 근속기간 (년)</label><input type="number" id="workTenure" min="0" max="60" step="1" value="20" inputmode="decimal">
-<small>퇴직 시 임금이 현재와 같다는 단순 가정으로 계산해요. 실제 DB형 급여는 퇴직 당시 평균임금 등으로 결정됩니다.</small>
+<label>현재 세전 연봉</label><input type="number" id="workSalary" min="0" step="1" value="3600" inputmode="decimal">
+<label>입사일부터 퇴직일까지 예상 총 근속연수 (년)</label><input type="number" id="workTenure" min="0" max="60" step="1" value="20" inputmode="decimal">
+<small>현재까지 근무한 기간도 포함하세요. 예: 25세 입사, 현재 30세, 60세 퇴직이면 총 35년입니다. 연봉 ÷ 12 × 총 근속연수로 세전 단순 추정하며, 실제 DB형 급여는 퇴직 직전 평균임금 등에 따라 달라집니다.</small>
 </div>
 <div id="workDCFields" class="extra-fields hidden">
-<label>현재 DC 적립액 (만원)</label><input type="number" id="workDCBalance" min="0" step="1" value="0" inputmode="decimal">
-<label>세전 월급 (만원)</label><input type="number" id="workDCMonthlySalary" min="0" step="1" value="" placeholder="예: 300" inputmode="decimal" oninput="syncDCAnnual()"><small id="dcAnnualPreview">월급을 입력하면 연간 회사 부담금을 계산해요.</small><details class="info-fold"><summary>연간 회사 부담금 직접 입력</summary><label>연간 회사 부담금 (만원)</label><input type="number" id="workDCAnnual" min="0" step="1" value="0" inputmode="decimal" oninput="syncDCSalary()"></details>
-<small>DC형 법정 최소 부담금: 연간 임금총액의 1/12 이상. 월급이 연중 일정한 경우 세전 월급 1개월분과 비슷해요. 실제 상여금·수당·임금변동은 별도 확인이 필요해요.</small>
+<label>현재 DC 적립액</label><input type="number" id="workDCBalance" min="0" step="1" value="0" inputmode="decimal">
+<label>현재 세전 연봉</label><input type="number" id="workDCMonthlySalary" min="0" step="1" value="" placeholder="예: 3,600 (숫자만 입력)" inputmode="decimal" oninput="syncDCAnnual()"><small id="dcAnnualPreview">연봉을 입력하면 연간 회사 부담금(연봉 ÷ 12)을 추정해요.</small><details class="info-fold"><summary>연간 회사 부담금 직접 입력</summary><label>연간 회사 부담금</label><input type="number" id="workDCAnnual" min="0" step="1" value="0" inputmode="decimal" oninput="syncDCSalary()"></details>
+<small>DC형 회사 부담금은 연간 임금총액의 1/12 이상입니다. 현재 DC 적립액에는 입사 후 지금까지 쌓인 금액을 입력하세요. 앞으로 퇴직할 때까지의 부담금만 추가 적립합니다. 연봉·상여금 변동은 별도 확인이 필요해요.</small>
 </div></div><div id="pensionOptions" class="hidden" style="margin-top:15px"><label style="display:flex;align-items:center;gap:10px;font-weight:500"><input type="checkbox" id="noPension" style="width:20px;min-height:20px">국민연금을 받지 않아요 (0원 적용)</label></div><div style="height:25px"></div><div class="row"><button class="btn secondary" id="back" onclick="previous()">이전</button><button class="btn" id="next" onclick="advance()">다음</button></div></section>
-<section id="results" class="hidden"><div class="card"><span class="pill">나의 은퇴 진단 결과</span><h1 style="margin-top:15px">은퇴 후 생활비,<br>몇 살까지 가능할까요?</h1><p id="summary"></p><div class="stat">은퇴 시점 예상 금융자산·퇴직급여 합계<b id="atRetire"></b><small id="workPensionSummary"></small></div><div class="stat">🔵 현재 계획 · 생활비 부족 시작<b id="status"></b></div><div class="stat hidden" id="changedStatusCard">🟠 변경 계획 · 생활비 부족 시작<b id="statusChanged"></b></div><h2 style="font-size:18px;margin-top:25px">은퇴 후 월 생활비 추이</h2><p style="font-size:13px">실선: 충당 가능액 · 점선: 희망 생활비</p><svg id="graph" class="chart" viewBox="0 0 460 260" role="img" aria-label="은퇴 이후 연령별 실제 충당 가능한 월 생활비와 희망 생활비 비교"></svg><div class="legend"><span class="dot"></span>현재 계획 &nbsp; <span id="changedLegend" class="hidden"><span class="dot alt"></span>변경 계획 &nbsp; </span> <span style="display:inline-block;width:17px;border-top:2px dashed #7f8ba2;vertical-align:middle"></span> 기본 희망 생활비 <span id="changedTargetLegend" class="hidden"><span style="display:inline-block;width:17px;border-top:2px dotted #9aa6b8;vertical-align:middle;margin-left:7px"></span> 변경 희망 생활비</span></div><p class="notice" id="comparisonNote"></p><details class="info-fold"><summary>계산 기준 · 유의사항</summary><p id="graphNote"></p><p>국민연금 통계 대체값: 월 647,543원(2026년 4월, 국민연금공단). 기초연금 제외. 개인별 실제 수령액·개시 연령은 다릅니다.</p><p>미래 수익 및 연금 수령액을 보장하지 않는 추정치입니다.</p></details></div>
-<div class="card"><h2>미래를 바꿔볼까요?</h2><p>입력값 변경 시 결과 자동 반영</p><label>매달 저축하는 돈 (만원)</label><input type="number" id="save2" min="0" max="10000" oninput="recalc()"><label>은퇴하고 싶은 나이 (세)</label><input type="number" id="retire2" min="19" max="85" oninput="recalc()"><label>은퇴 후 한 달 생활비 (만원, 현재 가치)</label><input type="number" id="spend2" min="0" max="10000" oninput="recalc()"><label>국민연금 월 수령액 (만원)</label><input type="number" id="pension2" min="0" max="10000" step="0.1" oninput="recalc()"><small id="pensionNote">0원 입력 시 통계 평균액을 적용합니다.</small><button type="button" class="details-toggle" id="detailsToggle" aria-expanded="false" onclick="toggleDetails()">⚙ 상세 설정 <span id="detailsArrow">펼치기 ＋</span></button>
+<section id="results" class="hidden"><div class="card"><span class="pill">나의 은퇴 진단 결과</span><h1 style="margin-top:15px">은퇴 후 생활비,<br>몇 살까지 가능할까요?</h1><p id="summary" class="hidden"></p><div class="stat">은퇴 시점 예상 금융자산·퇴직급여 합계<b id="atRetire"></b><small id="workPensionSummary"></small></div><div class="shortfall-card"><span class="shortfall-caption">🔵 현재 계획 · 생활비 부족 예상 시점</span><b id="status"></b><small>해당 시점부터 희망 생활비를 모두 충당하기 어려울 수 있어요.</small></div><div class="shortfall-card changed hidden" id="changedStatusCard"><span class="shortfall-caption">🟠 변경 계획 · 생활비 부족 예상 시점</span><b id="statusChanged"></b><small>변경한 조건으로 다시 계산한 결과예요.</small></div><h2 style="font-size:18px;margin-top:25px">은퇴 후 월 생활비 추이</h2><p style="font-size:13px">실선: 충당 가능액 · 점선: 희망 생활비</p><svg id="graph" class="chart" viewBox="0 0 460 260" role="img" aria-label="은퇴 이후 연령별 실제 충당 가능한 월 생활비와 희망 생활비 비교"></svg><div class="legend"><span class="dot"></span>현재 계획 &nbsp; <span id="changedLegend" class="hidden"><span class="dot alt"></span>변경 계획 &nbsp; </span> <span style="display:inline-block;width:17px;border-top:2px dashed #7f8ba2;vertical-align:middle"></span> 기본 희망 생활비 <span id="changedTargetLegend" class="hidden"><span style="display:inline-block;width:17px;border-top:2px dotted #9aa6b8;vertical-align:middle;margin-left:7px"></span> 변경 희망 생활비</span></div><p class="notice" id="comparisonNote"></p><details class="info-fold"><summary>계산 기준 · 유의사항</summary><p id="graphNote"></p><p>국민연금 통계 대체값: 월 647,543원(2026년 4월, 국민연금공단). 기초연금 제외. 개인별 실제 수령액·개시 연령은 다릅니다.</p><p>미래 수익 및 연금 수령액을 보장하지 않는 추정치입니다.</p></details></div>
+<div class="card"><h2>미래를 바꿔볼까요?</h2><p>조건을 수정한 뒤 아래 버튼을 눌러 비교해 보세요.</p><label>매달 저축하는 돈</label><input type="number" id="save2" min="0" max="10000" oninput="markPending(this)"><label>은퇴하고 싶은 나이 (세)</label><input type="number" id="retire2" min="19" max="85" oninput="markPending(this)"><label>은퇴 후 한 달 생활비 (현재 가치)</label><input type="number" id="spend2" min="0" max="10000" oninput="markPending(this)"><label>국민연금 월 수령액</label><input type="number" id="pension2" min="0" max="10000" step="0.1" oninput="markPending(this)"><small id="pensionNote">0원 입력 시 통계 평균액을 적용합니다.</small><button type="button" class="details-toggle" id="detailsToggle" aria-expanded="false" onclick="toggleDetails()">⚙ 상세 설정 <span id="detailsArrow">펼치기 ＋</span></button>
 <div class="details-panel hidden" id="detailsPanel">
 <p style="font-size:13px">선택 항목 · 기본값 유지 가능</p>
 <h3>① 연금 설정</h3>
-<label>국민연금 받기 시작하는 나이</label><input type="number" id="pensionStart" min="50" max="85" step="1" value="65" oninput="recalc()"><small>65세는 초기 계산 가정입니다. 실제 개시 연령은 개인마다 다릅니다.</small>
-<label>기존 개인연금 월 수령액 (만원)</label><input type="number" id="privatePension" min="0" step="1" value="0" oninput="recalc()">
-<div class="row"><div><label>받기 시작 (세)</label><input type="number" id="privateStart" min="40" max="100" value="60" oninput="recalc()"></div><div><label>받기 종료 (세)</label><input type="number" id="privateEnd" min="40" max="110" value="85" oninput="recalc()"></div></div>
+<label>국민연금 받기 시작하는 나이</label><input type="number" id="pensionStart" min="50" max="85" step="1" value="65" oninput="markPending(this)"><small>65세는 초기 계산 가정입니다. 실제 개시 연령은 개인마다 다릅니다.</small>
+<label>기존 개인연금 월 수령액</label><input type="number" id="privatePension" min="0" step="1" value="0" oninput="markPending(this)">
+<div class="row"><div><label>받기 시작 (세)</label><input type="number" id="privateStart" min="40" max="100" value="60" oninput="markPending(this)"></div><div><label>받기 종료 (세)</label><input type="number" id="privateEnd" min="40" max="110" value="85" oninput="markPending(this)"></div></div>
 <small>기존 개인연금만 입력하세요. 위에서 계산한 DB·DC 퇴직급여나 별도 IRP 적립액을 다시 입력하면 중복 계산돼요. 입력 월 연금액은 현재 구매력 기준으로 간주하고 물가에 연동된다고 가정합니다.</small>
 <h3>② 나이에 따른 생활비</h3>
-<label style="display:flex;align-items:center;gap:9px;font-weight:500"><input type="checkbox" id="ageSpending" style="width:20px;min-height:20px" onchange="toggleSpending()">나이에 따라 생활비 다르게 쓰기</label>
+<label style="display:flex;align-items:center;gap:9px;font-weight:500"><input type="checkbox" id="ageSpending" style="width:20px;min-height:20px" onchange="toggleSpending();markPending(this)">나이에 따라 생활비 다르게 쓰기</label>
 <div id="spendingPanel" class="hidden"><small>아래 비율은 최초 희망 생활비에 적용해요. 100%는 동일한 생활비입니다.</small>
-<div class="row"><div><label>70대 (%)</label><input type="number" id="spend70" min="0" max="300" value="100" oninput="recalc()"></div><div><label>80대 (%)</label><input type="number" id="spend80" min="0" max="300" value="100" oninput="recalc()"></div><div><label>90세 이후 (%)</label><input type="number" id="spend90" min="0" max="300" value="100" oninput="recalc()"></div></div></div>
+<div class="row"><div><label>70대 (%)</label><input type="number" id="spend70" min="0" max="300" value="100" oninput="markPending(this)"></div><div><label>80대 (%)</label><input type="number" id="spend80" min="0" max="300" value="100" oninput="markPending(this)"></div><div><label>90세 이후 (%)</label><input type="number" id="spend90" min="0" max="300" value="100" oninput="markPending(this)"></div></div></div>
 <h3>③ 운용 방식 · 수익률 · 물가</h3>
 <label for="investStyle">어떤 방식으로 운용할까요?</label>
-<select id="investStyle" onchange="applyInvestStyle()">
+<select id="investStyle" onchange="applyInvestStyle();markPending(this)">
 <option value="balanced" selected>기본형 · 연 3% (공통 가정)</option>
 <option value="safe">안정 중심 · 연 2% (예시 가정)</option>
 <option value="growth">성장 중심 · 연 5% (예시 가정)</option>
 <option value="custom">직접 설정</option>
 </select>
 <small>일반 자산·DC 적용 · IRP 별도 선택 / 2·3·5%는 비교용 가정</small>
-<div class="row"><div><label>은퇴 전 수익률 (%)</label><input type="number" id="preRate" min="-50" max="30" step="0.5" value="3" oninput="markCustom();recalc()"></div><div><label>은퇴 후 수익률 (%)</label><input type="number" id="postRate" min="-50" max="30" step="0.5" value="3" oninput="markCustom();recalc()"></div></div>
-<div class="row"><div><label>IRP 운용수익률 직접 조정 (%)</label><input type="number" id="irpRateDetail" min="-50" max="30" step="0.5" value="2.99" oninput="markIrpCustom();recalc()"></div><div><label>DC형 운용수익률 (%)</label><input type="number" id="dcRate" min="-50" max="30" step="0.5" value="3" oninput="markCustom();recalc()"></div></div>
-<label>연간 물가상승률 (%)</label><input type="number" id="inflationRate" min="-10" max="30" step="0.5" value="2" oninput="recalc()"><small>수익률은 확정 수익이 아닌 계산용 가정입니다. 세금과 수수료는 반영하지 않습니다.</small>
+<div class="row"><div><label>은퇴 전 수익률 (%)</label><input type="number" id="preRate" min="-50" max="30" step="0.5" value="3" oninput="markCustom();markPending(this)"></div><div><label>은퇴 후 수익률 (%)</label><input type="number" id="postRate" min="-50" max="30" step="0.5" value="3" oninput="markCustom();markPending(this)"></div></div>
+<div class="row"><div><label>IRP 운용수익률 직접 조정 (%)</label><input type="number" id="irpRateDetail" min="-50" max="30" step="0.5" value="2.99" oninput="markIrpCustom();markPending(this)"></div><div><label>DC형 운용수익률 (%)</label><input type="number" id="dcRate" min="-50" max="30" step="0.5" value="3" oninput="markCustom();markPending(this)"></div></div>
+<label>연간 물가상승률 (%)</label><input type="number" id="inflationRate" min="-10" max="30" step="0.5" value="2" oninput="markPending(this)"><small>수익률은 확정 수익이 아닌 계산용 가정입니다. 세금과 수수료는 반영하지 않습니다.</small>
 <button type="button" class="btn secondary" style="margin-top:18px" onclick="resetDetails()">상세 설정 기본값으로 되돌리기</button>
 </div>
-<div id="changedDetails" class="hidden"><div class="stat">변경한 계획의 은퇴 시점 자산<b id="newAsset"></b></div><div class="stat">현재 계획 대비 목표 연령 잔여자산 차이<b id="delta"></b></div></div><p id="editHint" class="notice">위 금액 중 하나를 바꾸면 변경된 계획이 주황색으로 표시돼요.</p><button class="btn secondary" onclick="window.print()">결과 PDF로 저장</button></div><div class="card" id="irpCard"><span class="pill">노후 준비 추가 실험</span><h2 style="margin-top:15px">개인형 IRP로<br>저축 방법을 바꿔볼까요?</h2><p>납입액·운용 방식별 은퇴자산 비교</p><div class="stat" style="margin-top:18px">현재 설정한 월 저축액<b id="irpCurrentSaving">0만원</b></div>
+<button type="button" class="btn apply-result" onclick="applyResults()">결과 변경하기 →</button><small class="pending-hint" id="pendingMain" aria-live="polite"></small><div id="changedDetails" class="hidden"><div class="stat">변경한 계획의 은퇴 시점 자산<b id="newAsset"></b></div><div class="stat">현재 계획 대비 목표 연령 잔여자산 차이<b id="delta"></b></div></div><p id="editHint" class="notice">조건을 수정한 뒤 ‘결과 변경’ 버튼을 눌러주세요.</p><button class="btn secondary" onclick="window.print()">결과 PDF로 저장</button></div><div class="card" id="irpCard"><span class="pill">노후 준비 추가 실험</span><h2 style="margin-top:15px">개인형 IRP로<br>저축 방법을 바꿔볼까요?</h2><p>납입액·운용 방식별 은퇴자산 비교</p><div class="stat" style="margin-top:18px">현재 설정한 월 저축액<b id="irpCurrentSaving">0만원</b></div>
 <label>IRP 납입 방법</label><div class="pension-choice" style="margin-top:8px">
-<label><input type="radio" name="irpMode" value="transfer" checked onchange="recalc()"><span>기존 저축에서 옮기기<small>총 저축액은 그대로 유지</small></span></label>
-<label><input type="radio" name="irpMode" value="extra" onchange="recalc()"><span>추가로 저축하기<small>월 총 저축액 증가</small></span></label></div>
-<label for="irpMonthly">매달 IRP에 납입할 금액 (만원)</label><input type="number" id="irpMonthly" min="0" max="150" step="1" value="0" inputmode="decimal" oninput="recalc()"><small id="irpAllocation">기존 저축액 중 IRP에 넣을 금액을 입력해 주세요.</small><small>연금계좌 합산 납입한도: 연 1,800만원</small><div class="extra-fields" style="margin-top:18px"><label for="irpStrategy" style="margin-top:0">IRP에 모은 돈을 어떻게 운용할까요?</label>
-<select id="irpStrategy" onchange="updateIrpStrategy();recalc()">
+<label><input type="radio" name="irpMode" value="transfer" checked onchange="markPending(this)"><span>기존 저축에서 옮기기<small>총 저축액은 그대로 유지</small></span></label>
+<label><input type="radio" name="irpMode" value="extra" onchange="markPending(this)"><span>추가로 저축하기<small>월 총 저축액 증가</small></span></label></div>
+<label for="irpMonthly">매달 IRP에 납입할 금액</label><input type="number" id="irpMonthly" min="0" max="150" step="1" value="0" inputmode="decimal" oninput="markPending(this)"><small id="irpValidation" style="color:#c2410c;font-weight:700" aria-live="polite"></small><small id="irpAllocation">기존 저축액 중 IRP에 넣을 금액을 입력해 주세요.</small><small>연금계좌 합산 납입한도: 연 1,800만원(월 환산 150만원). 월 저축 200만원 전액을 IRP에 납입할 수는 없어요.</small><div class="extra-fields" style="margin-top:18px"><label for="irpStrategy" style="margin-top:0">IRP에 모은 돈을 어떻게 운용할까요?</label>
+<select id="irpStrategy" onchange="updateIrpStrategy();markPending(this)">
 <option value="unknown" selected>잘 모르겠어요 · IRP 전체 10년 평균 2.99%</option>
 <option value="deposit">🏦 예금·원리금보장형 중심</option>
 <option value="mixed">⚖️ 예금 + 투자 혼합</option>
 <option value="fund">📈 ETF·펀드 중심</option>
 <option value="custom">⚙️ 수익률 직접 설정</option>
 </select>
-<div id="irpMixPanel" class="hidden"><label for="irpSafeWeight">예금·원리금보장형 비중 <b id="irpSafePct">70%</b></label><input id="irpSafeWeight" type="range" min="30" max="100" step="5" value="70" oninput="updateIrpStrategy();recalc()"><small>나머지 <span id="irpRiskPct">30%</span>는 ETF·펀드 등 투자상품으로 가정해요. 실제 IRP 위험자산 편입 한도는 상품 유형에 따라 다릅니다.</small></div>
+<div id="irpMixPanel" class="hidden"><label for="irpSafeWeight">예금·원리금보장형 비중 <b id="irpSafePct">70%</b></label><input id="irpSafeWeight" type="range" min="30" max="100" step="5" value="70" oninput="updateIrpStrategy();markPending(this)"><small>나머지 <span id="irpRiskPct">30%</span>는 ETF·펀드 등 투자상품으로 가정해요. 실제 IRP 위험자산 편입 한도는 상품 유형에 따라 다릅니다.</small></div>
 <small id="irpStrategyInfo">IRP 10년 연환산 2.99% · 과거 실적</small>
-<small>최근 10년 연환산(2025년 말): 원리금보장 2.11% · 실적배당 4.48%(퇴직연금 전체), IRP 2.99%. 혼합형은 비중 가중 추정. <a href="https://www.kcmi.re.kr/report/report_view?report_no=2327" target="_blank" rel="noopener noreferrer">출처: 자본시장연구원(고용노동부·금융감독원 통계 인용) ↗</a></small></div><input type="hidden" id="irpRate" value="2.99"><div class="stat">은퇴 시점 예상 IRP 적립액<b id="irpBalance">0만원</b></div><div class="stat">연간 세액공제 산술 예시 (환급 보장 아님)<b id="irpTax">0만원</b></div><input type="hidden" id="irpTaxBand" value="14.85"><input type="hidden" id="irpOtherDeduction" value="0"><small>계산용 14.85% 적용 · 실제 공제율 13.2% 또는 16.5% · 타 연금계좌 납입 0원 가정</small><small id="irpSummary">납입액을 입력하면 계산 결과를 보여드려요.</small><div id="irpComparisonNote" class="stat" style="margin-top:14px;display:none;background:#fff8eb;border-color:#ffe0aa;color:#7a4b12;line-height:1.65;font-size:14px"></div><details class="info-fold"><summary>IRP 계산 기준 · 유의사항</summary><p>수익률: 2025년 말 기준 과거 10년 연환산 실적. 미래 수익 보장 아님. 실적배당형 원금 손실 가능. 혼합형은 비중 가중 추정치.</p><p>중도 인출 제한 · 수수료 · 수령 시 과세 가능. 세액공제는 납부세액·소득·타 연금계좌 납입액에 따라 달라짐.</p><p>14.85%는 13.2%와 16.5%의 산술 중간값(실제 평균 아님). IRP 수령세금·수수료·세액공제액 재투자는 미반영. 기존 IRP 납입액 중복 입력 주의.</p></details></div>
+<small>최근 10년 연환산(2025년 말): 원리금보장 2.11% · 실적배당 4.48%(퇴직연금 전체), IRP 2.99%. 혼합형은 비중 가중 추정. <a href="https://www.kcmi.re.kr/report/report_view?report_no=2327" target="_blank" rel="noopener noreferrer">출처: 자본시장연구원(고용노동부·금융감독원 통계 인용) ↗</a></small></div><input type="hidden" id="irpRate" value="2.99"><button type="button" class="btn apply-result" onclick="applyResults()">IRP 결과 변경하기 →</button><small class="pending-hint" id="pendingIrp" aria-live="polite"></small><div class="stat">은퇴 시점 예상 IRP 적립액<b id="irpBalance">0만원</b></div><div class="stat">연간 세액공제 산술 예시 (환급 보장 아님)<b id="irpTax">0만원</b></div><input type="hidden" id="irpTaxBand" value="14.85"><input type="hidden" id="irpOtherDeduction" value="0"><small>계산용 14.85% 적용 · 실제 공제율 13.2% 또는 16.5% · 타 연금계좌 납입 0원 가정</small><small id="irpSummary">납입액을 입력하면 계산 결과를 보여드려요.</small><div id="irpComparisonNote" class="stat" style="margin-top:14px;display:none;background:#fff8eb;border-color:#ffe0aa;color:#7a4b12;line-height:1.65;font-size:14px"></div><details class="info-fold"><summary>IRP 계산 기준 · 유의사항</summary><p>수익률: 2025년 말 기준 과거 10년 연환산 실적. 미래 수익 보장 아님. 실적배당형 원금 손실 가능. 혼합형은 비중 가중 추정치.</p><p>중도 인출 제한 · 수수료 · 수령 시 과세 가능. 세액공제는 납부세액·소득·타 연금계좌 납입액에 따라 달라짐.</p><p>14.85%는 13.2%와 16.5%의 산술 중간값(실제 평균 아님). IRP 수령세금·수수료·세액공제액 재투자는 미반영. 기존 IRP 납입액 중복 입력 주의.</p></details></div>
 <div class="card" id="housingCard"><span class="pill">노후 소득 추가 실험</span><h2 style="margin-top:14px">🏠 주택연금 가입하면?</h2><p>내 집에 거주하면서 받는 월 연금 · 기존 IRP와 함께 비교</p>
-<label class="house-toggle"><input type="checkbox" id="houseOn" onchange="recalc()"> 주택연금 적용하기</label>
-<div id="houseInputs" class="hidden"><label>주택 시세 (만원)</label><input id="housePrice" type="number" min="1000" max="300000" step="1000" value="30000" oninput="recalc()"><div class="row"><div><label>가입 나이 (세)</label><input id="houseAge" type="number" min="55" max="95" value="70" oninput="recalc()"></div><div><label>배우자 나이 (가입 시)</label><input id="houseSpouse" type="number" min="0" max="95" value="0" oninput="recalc()"></div></div><small>배우자가 없으면 0 · 부부 중 연소자 나이로 월 지급액 산정</small>
-<div class="stat">주택연금 월 예상 지급액<b id="houseMonthly">—</b></div><small id="houseBasis">2026.03.01 한국주택금융공사 일반주택·종신 정액형 조견표 기준</small><small id="houseWarning"></small><details class="info-fold"><summary>가입 조건 · 계산 기준</summary><p>부부 중 한 명 55세 이상, 부부합산 공시가격 등 12억 원 이하 등 요건 충족 필요. 입력한 시세는 공시가격과 다를 수 있습니다.</p><p>월지급액은 공식 조견표의 연령·주택가격 구간을 선형 보간한 참고 추정치입니다. 실제 월지급액은 주택 종류, 인정 시세, 배우자 나이, 지급 방식 등에 따라 달라집니다. 정액형은 명목 지급액 일정으로 가정합니다.</p><p>주택연금은 담보대출 성격의 연금이며 보증료·이자 등이 발생합니다. 주택 시세를 현금성 은퇴자산에 더하지 않습니다. 주택담보대출 잔액과 대출상환 방식은 미반영.</p><p><a href="https://www.hf.go.kr/ko/sub03/sub03_02_02.do" target="_blank" rel="noopener">한국주택금융공사 공식 예상연금조회 ↗</a> · <a href="https://hf.go.kr/ko/sub03/sub03_01_01_02.do" target="_blank" rel="noopener">2026년 월지급금 조견표 ↗</a></p></details></div></div>
+<label class="house-toggle"><input type="checkbox" id="houseOn" onchange="toggleHouseInputs();markPending(this)"> 주택연금 적용하기</label><button type="button" class="btn apply-result" onclick="applyResults()">주택연금 결과 변경하기 →</button><small class="pending-hint" id="pendingHouse" aria-live="polite"></small>
+<div id="houseInputs" class="hidden"><label>주택 예상 매매가격 (시세 기준)</label><small>공시가격이 아닌 실제 시장에서 거래되는 예상 가격을 입력해 주세요. 가입 자격 판단에는 공시가격 등 별도 기준이 적용돼요.</small><input id="housePrice" type="number" min="1000" max="300000" step="1000" value="30000" oninput="markPending(this)"><div class="row"><div><label>가입 나이 (세)</label><input id="houseAge" type="number" min="55" max="95" value="70" oninput="markPending(this)"></div><div><label>배우자 나이 (가입 시)</label><input id="houseSpouse" type="number" min="0" max="95" value="0" oninput="markPending(this)"></div></div><small>배우자가 없으면 0 · 부부 중 연소자 나이로 월 지급액 산정</small>
+<div class="stat">주택연금 월 예상 지급액<b id="houseMonthly">—</b></div><small id="houseBasis">2026.03.01 한국주택금융공사 일반주택·종신 정액형 조견표 기준</small><small id="houseWarning"></small><details class="info-fold"><summary>가입 조건 · 계산 기준</summary><p>부부 중 한 명 55세 이상, 부부합산 공시가격 등 12억 원 이하 등 요건 충족 필요. 월지급액 추정에는 예상 매매가격을 사용하며, 가입 요건 판단용 공시가격과는 다릅니다.</p><p>월지급액은 공식 조견표의 연령·주택가격 구간을 선형 보간한 참고 추정치입니다. 실제 월지급액은 주택 종류, 인정 시세, 배우자 나이, 지급 방식 등에 따라 달라집니다. 정액형은 명목 지급액 일정으로 가정합니다.</p><p>주택연금은 담보대출 성격의 연금이며 보증료·이자 등이 발생합니다. 주택 시세를 현금성 은퇴자산에 더하지 않습니다. 주택담보대출 잔액과 대출상환 방식은 미반영.</p><p><a href="https://www.hf.go.kr/ko/sub03/sub03_02_02.do" target="_blank" rel="noopener">한국주택금융공사 공식 예상연금조회 ↗</a> · <a href="https://hf.go.kr/ko/sub03/sub03_01_01_02.do" target="_blank" rel="noopener">2026년 월지급금 조견표 ↗</a></p></details></div></div>
 <div class="card" id="actionCard"><span class="pill">참고용 개선 계산</span><h2 style="margin-top:15px">내 노후를 바꾸는<br>3가지 방법</h2><p id="actionIntro">입력 조건 기준</p><div id="actionList"></div><p class="notice">추정치 · 세금 및 수익률 변동성 미반영</p></div>
 <button class="btn secondary" onclick="reset()">처음부터 다시 하기</button></section></main>
 <script>
@@ -132,14 +146,21 @@ const questions=[
 const AVG_PENSION=64.7543;let step=0;let data={};const $=id=>document.getElementById(id);const money=n=>Math.round(n).toLocaleString('ko-KR')+'만원';
 function show(id){['home','quiz','results'].forEach(k=>$(k).classList.toggle('hidden',k!==id))}
 function start(){step=0;show('quiz');render()}
-function syncDCAnnual(){const v=$('workDCMonthlySalary').value; if(v.trim()!==''){ $('workDCAnnual').value=Number(v); $('dcAnnualPreview').textContent='연간 회사 부담금 최소 추정: '+Number(v).toLocaleString('ko-KR')+'만원 (급여 일정·상여금 제외 가정)';}else{$('workDCAnnual').value=0;$('dcAnnualPreview').textContent='월급을 입력하면 연간 회사 부담금을 계산해요.'}}
+function syncDCAnnual(){const v=$('workDCMonthlySalary').value; if(v.trim()!==''){const annual=Number(v)/12; $('workDCAnnual').value=Number(annual.toFixed(4)); $('dcAnnualPreview').textContent='연간 회사 부담금 추정: '+annual.toLocaleString('ko-KR',{maximumFractionDigits:2})+'만원 (세전 연봉 ÷ 12)';}else{$('workDCAnnual').value=0;$('dcAnnualPreview').textContent='연봉을 입력하면 연간 회사 부담금(연봉 ÷ 12)을 추정해요.'}}
 function syncDCSalary(){ $('workDCMonthlySalary').value='';$('dcAnnualPreview').textContent='직접 입력한 연간 회사 부담금을 사용해요.';}
 function updateWorkFields(){
  const type=document.querySelector('input[name="workType"]:checked')?.value||'unknown';
  $('workDBFields').classList.toggle('hidden',type!=='db');
  $('workDCFields').classList.toggle('hidden',type!=='dc');
 }
-function render(){let q=questions[step];$('stepLabel').textContent=`${step+1} / ${questions.length}`;$('bar').style.width=((step+1)/questions.length*100)+'%';$('question').textContent=q[0];$('hint').textContent=q[1];$('field').innerHTML=q[2]==='workType'?'':`<label for="answer">${q[3]} 단위로 입력</label><input id="answer" type="number" min="0" step="1" value="${data[q[2]]??q[4]}" inputmode="numeric">`;$('pensionOptions').classList.toggle('hidden',q[2]!=='pension');$('workPensionOptions').classList.toggle('hidden',q[2]!=='workType');if(q[2]==='workType'){if(data.workType==='none')data.workType='unknown';document.querySelector(`input[name="workType"][value="${data.workType||'unknown'}"]`).checked=true;['workSalary','workTenure','workDCBalance','workDCAnnual','workDCMonthlySalary'].forEach(k=>{if(data[k]!==undefined)$(k).value=data[k]});updateWorkFields();if(data.workDCMonthlySalary!==undefined)syncDCAnnual()}if(q[2]==='pension')$('noPension').checked=!!data.noPension;$('back').disabled=step===0;$('next').textContent=step===questions.length-1?'결과 보기':'다음'}
+
+function decorateMoneyInputs(){
+ const ids=['workSalary','workDCBalance','workDCMonthlySalary','workDCAnnual','save2','spend2','pension2','privatePension','irpMonthly','housePrice'];
+ ids.forEach(id=>{const el=$(id);if(!el||el.parentElement.classList.contains('money-input'))return;const wrap=document.createElement('div');wrap.className='money-input';el.parentNode.insertBefore(wrap,el);wrap.appendChild(el);const unit=document.createElement('span');unit.className='money-unit';unit.textContent='만원';wrap.appendChild(unit);});
+ const ans=$('answer');if(ans&&!ans.parentElement.classList.contains('money-input')){const wrap=document.createElement('div');wrap.className='money-input';ans.parentNode.insertBefore(wrap,ans);wrap.appendChild(ans);const unit=document.createElement('span');unit.className='money-unit';unit.textContent='만원';wrap.appendChild(unit);}
+ const unit=$('answer')?.parentElement.querySelector('.money-unit');if(unit)unit.textContent=['assets','save','spend','pension'].includes(questions[step][2])?'만원':'세';
+}
+function render(){let q=questions[step];$('stepLabel').textContent=`${step+1} / ${questions.length}`;$('bar').style.width=((step+1)/questions.length*100)+'%';$('question').textContent=q[0];$('hint').textContent=q[1];$('hint').style.display=q[2]==='workType'?'block':'none';$('field').innerHTML=q[2]==='workType'?'':`<p class="quiz-input-hint">${q[1]}</p><input id="answer" type="number" min="0" step="1" value="${data[q[2]]??q[4]}" inputmode="numeric">`;$('pensionOptions').classList.toggle('hidden',q[2]!=='pension');$('workPensionOptions').classList.toggle('hidden',q[2]!=='workType');if(q[2]==='workType'){if(data.workType==='none')data.workType='unknown';document.querySelector(`input[name="workType"][value="${data.workType||'unknown'}"]`).checked=true;['workSalary','workTenure','workDCBalance','workDCAnnual','workDCMonthlySalary'].forEach(k=>{if(data[k]!==undefined)$(k).value=data[k]});updateWorkFields();if(data.workDCMonthlySalary!==undefined)syncDCAnnual()}decorateMoneyInputs();if(q[2]==='pension')$('noPension').checked=!!data.noPension;$('back').disabled=step===0;$('next').textContent=step===questions.length-1?'결과 보기':'다음'}
 function saveStep(){let q=questions[step];if(q[2]==='workType'){data.workType=document.querySelector('input[name="workType"]:checked')?.value||'unknown';for(let k of ['workSalary','workTenure','workDCBalance','workDCAnnual']){let el=$(k),v=Number(el.value);if(!Number.isFinite(v)||v<0||el.value.trim()===''){alert('퇴직연금 입력값을 확인해 주세요.');return false}data[k]=v}data.workDCMonthlySalary=$('workDCMonthlySalary').value.trim()===''?undefined:Number($('workDCMonthlySalary').value);if(data.workType==='db'&&data.workTenure>60){alert('예상 근속기간을 확인해 주세요.');return false}return true}let v=Number($('answer').value);if(!Number.isFinite(v)||v<0||$('answer').value.trim()===''){alert('0 이상의 숫자를 입력해 주세요.');return false}data[q[2]]=v;if(q[2]==='pension')data.noPension=$('noPension').checked;return true}
 function previous(){if(step>0){saveStep();step--;render()}}
 function advance(){if(!saveStep())return;if(step<questions.length-1){step++;render()}else{if(!(data.age<data.retire&&data.retire<data.end)){alert('현재 나이 < 은퇴 나이 < 목표 나이 순서로 입력해 주세요.');return}show('results');$('save2').value=data.save;$('retire2').value=data.retire;$('spend2').value=data.spend;$('pension2').value=data.pension===0&&!data.noPension?AVG_PENSION.toFixed(1):data.pension;recalc()}}
@@ -164,10 +185,10 @@ function applyInvestStyle(){
  const mode=$('investStyle').value;if(mode==='custom')return;
  const rate=mode==='safe'?2:mode==='growth'?5:3;
  ['preRate','postRate','dcRate'].forEach(id=>$(id).value=rate);
- if($('irpStrategy').value==='unknown'){$('irpRateDetail').value=2.99;updateIrpStrategy()}recalc();
+ if($('irpStrategy').value==='unknown'){$('irpRateDetail').value=2.99;updateIrpStrategy()}markPending();
 }
 function toggleDetails(){let panel=$('detailsPanel'),open=panel.classList.toggle('hidden')===false;$('detailsToggle').setAttribute('aria-expanded',String(open));$('detailsArrow').textContent=open?'접기 −':'펼치기 ＋'}
-function toggleSpending(){$('spendingPanel').classList.toggle('hidden',!$('ageSpending').checked);recalc()}
+function toggleSpending(){$('spendingPanel').classList.toggle('hidden',!$('ageSpending').checked);markPending()}
 function resetDetails(){fields.forEach(k=>$(k).value=defaults[k]);$('irpRate').value=2.99;$('irpStrategy').value='unknown';$('irpSafeWeight').value=70;updateIrpStrategy();$('investStyle').value='balanced';$('ageSpending').checked=false;toggleSpending()}
 function spendingAt(d,age){
  if(!d.ageSpending)return d.spend;
@@ -196,7 +217,7 @@ function simulate(d){
    if(m<=retireM){balance=balance*(1+before)+d.save;irpBalance=irpBalance*(1+irpR)+irpPay;
  if(d.workType==='dc')workBalance=workBalance*(1+workR)+(d.workDCAnnual||0)/12;
  if(m===retireM){
-  if(d.workType==='db')workBalance=Math.max(0,(d.workSalary||0)*(d.workTenure||0));
+  if(d.workType==='db')workBalance=Math.max(0,(d.workSalary||0)/12*(d.workTenure||0));
   workAtRetire=workBalance;
   // 퇴직 시점에 퇴직급여를 일반 은퇴자산으로 합산하는 단순 세전 가정.
   balance+=workBalance;
@@ -209,6 +230,10 @@ function simulate(d){
    const privateNow=age>=d.privateStart&&age<d.privateEnd?d.privatePension*factor:0;
    const housing= d.houseOn && age>=d.houseAge ? d.houseMonthly : 0;
    const income=national+privateNow+housing;
+   // 정기 연금소득이 생활비를 초과하면 잉여 현금흐름을 일반 금융자산에 적립.
+   // 해당 월 운용수익 계산 후 적립하므로 잉여금은 다음 달부터 수익 발생.
+   const surplus=Math.max(0,income-wanted);
+   balance+=surplus;
    const gap=Math.max(0,wanted-income);
    const irpAvailable=age>=55?irpBalance:0;
    const paid=Math.min(wanted,income+balance+irpAvailable);
@@ -216,7 +241,6 @@ function simulate(d){
    balance=Math.max(0,balance-withdrawal);
    const irpWithdrawal=age>=55?Math.min(irpBalance,Math.max(0,gap-withdrawal)):0;
    irpBalance=Math.max(0,irpBalance-irpWithdrawal);
-   // 실제 지급액이 생활비를 초과하는 경우 초과액은 이 모형에서 저축하지 않음.
    if(firstDepletion===null&&gap>0&&balance+irpAvailable-withdrawal-irpWithdrawal<=1e-7)firstDepletion=age;
    if(firstShortfall===null&&paid+1e-7<wanted)firstShortfall=age;
    months.push({age:ageEnd,paid:paid/factor,wanted:wantedReal,balance:balance+irpBalance});
@@ -224,6 +248,23 @@ function simulate(d){
  return {points:[{age:d.retire,paid:months[0]?.paid??0,wanted:months[0]?.wanted??d.spend},...months],atRetire,irpAtRetire,workAtRetire,ending:balance+irpBalance,firstShortfall,firstDepletion};
 }
 function ageLabel(age){if(age===null)return null;return `${Math.floor(age+1e-8)}세`}
+
+/* Explicit application: typing does not update results or graph. */
+function toggleHouseInputs(){ $('houseInputs').classList.toggle('hidden',!$('houseOn').checked); }
+function markPending(el){
+ const id=el?.id||'';
+ const house=el?.closest?.('#housingCard');
+ const irp=el?.closest?.('#irpCard');
+ const target=house?'pendingHouse':irp?'pendingIrp':'pendingMain';
+ const hint=$(target);if(hint)hint.textContent='변경사항이 있어요. 버튼을 누르면 결과에 반영돼요.';
+}
+function applyResults(){
+ recalc();
+ // Validation messages are preserved, but a failed calculation must not clear pending state.
+ if($('irpValidation').textContent)return;
+ ['pendingMain','pendingIrp','pendingHouse'].forEach(id=>$(id).textContent='');
+}
+
 function recalc(){
  let custom=settings();updateIrpStrategy();let irpMonthly=Number($('irpMonthly').value),irpMode=document.querySelector('input[name="irpMode"]:checked')?.value||'transfer',irpRate=Number($('irpRate').value),irpOtherDeduction=Number($('irpOtherDeduction').value);let d={...data,...custom,irpMonthly,irpRate,save:Number($('save2').value)-(irpMode==='transfer'?irpMonthly:0),retire:Number($('retire2').value),spend:Number($('spend2').value),pension:Number($('pension2').value)};
  const houseOn=$('houseOn').checked,houseAge=Number($('houseAge').value),housePrice=Number($('housePrice').value),houseSpouse=Number($('houseSpouse').value);
@@ -237,12 +278,13 @@ function recalc(){
  const displayedSaving=Number($('save2').value);
  const nums=[houseAge,housePrice,houseSpouse,d.save,displayedSaving,d.retire,d.spend,d.pension,irpMonthly,irpRate,irpOtherDeduction,...fields.map(k=>d[k])];
  const valid=nums.every(Number.isFinite)&&(!houseOn||(houseAge>=55&&houseAge<=95&&housePrice>=10000&&housePrice<=300000&&houseSpouse>=0&&houseSpouse<=95&&houseSpouse<=houseAge))&&d.save>=0&&displayedSaving>=0&&irpMonthly>=0&&irpMonthly<=150&&irpRate>=-50&&irpRate<=30&&d.dcRate>=-50&&d.dcRate<=30&&irpOtherDeduction>=0&&irpOtherDeduction<=900&&d.spend>=0&&d.pension>=0&&d.retire>d.age&&d.retire<d.end&&d.pensionStart>=50&&d.pensionStart<=85&&d.privatePension>=0&&d.privateStart>=40&&d.privateEnd>d.privateStart&&d.privateEnd<=110&&[d.spend70,d.spend80,d.spend90].every(x=>x>=0&&x<=300)&&d.preRate>=-50&&d.preRate<=30&&d.postRate>=-50&&d.postRate<=30&&d.inflationRate>=-10&&d.inflationRate<=30;
- if(!valid){$('editHint').textContent=irpMode==='transfer'&&irpMonthly>displayedSaving?'IRP로 옮기는 금액은 현재 월 저축액을 넘을 수 없어요.':'입력값을 확인해 주세요. 연금 종료 나이는 시작 나이보다 커야 해요.';$('editHint').classList.remove('hidden');return}
+ if(!valid){$('irpValidation').textContent=irpMonthly>150?'IRP는 월 150만원까지 입력할 수 있어요. 200만원을 저축한다면 일반 저축 50만원 + IRP 150만원으로 설정해 주세요.':irpMode==='transfer'&&irpMonthly>displayedSaving?'IRP 납입액이 월 저축액보다 많아요.':'입력값을 확인해 주세요.';$('irpAllocation').textContent='현재 입력값으로는 계산할 수 없어요.';$('irpBalance').textContent='계산 불가';$('irpTax').textContent='계산 불가';$('irpSummary').textContent='입력값 수정 후 다시 계산해요.';$('irpComparisonNote').style.display='none';$('editHint').textContent=irpMode==='transfer'&&irpMonthly>displayedSaving?'IRP로 옮기는 금액은 현재 월 저축액을 넘을 수 없어요.':'입력값을 확인해 주세요. 연금 종료 나이는 시작 나이보다 커야 해요.';$('editHint').classList.remove('hidden');return}
+ $('irpValidation').textContent='';
  let baseline={...data,...defaults,houseOn:false,houseMonthly:0,irpMonthly:0,irpRate:3,pension:data.noPension?0:(data.pension===0?AVG_PENSION:data.pension)};
  let a=simulate(baseline),b=simulate(d);
  const changed=houseOn||irpMonthly>0||Math.abs(displayedSaving-data.save)>1e-8||Math.abs(d.retire-data.retire)>1e-8||Math.abs(d.spend-data.spend)>1e-8||Math.abs(d.pension-baseline.pension)>0.051||fields.some(k=>(k!=='irpRateDetail'||irpMonthly>0)&&Math.abs(d[k]-defaults[k])>1e-8)||d.ageSpending!==defaults.ageSpending;
  ['changedStatusCard','changedLegend','changedDetails'].forEach(k=>$(k).classList.toggle('hidden',!changed));
- $('editHint').classList.toggle('hidden',changed);$('editHint').textContent='위 금액이나 상세 설정을 바꾸면 변경된 계획이 주황색으로 표시돼요.';
+ $('editHint').classList.toggle('hidden',changed);$('editHint').textContent='조건을 수정한 뒤 ‘결과 변경’ 버튼을 눌러주세요.';
  $('pensionNote').textContent='최초 입력: '+(data.noPension?'연금 미수령(0원)':data.pension===0?'국민연금 통계 평균 약 64.8만원 자동 적용':'직접 입력 '+data.pension+'만원')+' · 변경 시 주황색 계획에 반영돼요.';
  $('atRetire').textContent=money(a.atRetire);
  $('workPensionSummary').textContent=data.workType==='db'?`DB형 예상 퇴직급여 ${money(a.workAtRetire)} 포함 · 세전 단순 추정`:
@@ -269,8 +311,8 @@ function recalc(){
  $('statusChanged').textContent=b.firstShortfall===null?`${data.end}세까지 충당 가능`:`${ageLabel(b.firstShortfall)}부터`; 
  $('newAsset').textContent=money(b.atRetire);
  let diff=b.ending-a.ending;$('delta').textContent=(diff>=0?'+':'')+money(diff);
- $('summary').textContent=`${data.retire}세 은퇴부터 ${data.end}세까지, 희망 생활비 월 ${money(data.spend)}을 기준으로 살펴봤어요.`;
- $('graphNote').textContent=`월별 계산 · 현재 가치 표시 · 국민연금 65세 개시 · 기본 수익률 연 3% · 물가 연 2%. DB·DC 퇴직급여는 은퇴 시 세전 일시금 합산. 입력 연금은 물가 연동 가정. 초과 연금소득 재저축 없음.`;
+ $('summary').textContent='';
+ $('graphNote').textContent=`월별 계산 · 현재 가치 표시 · 국민연금 65세 개시 · 기본 수익률 연 3% · 물가 연 2%. DB·DC 퇴직급여는 은퇴 시 세전 일시금 합산. 입력 연금은 물가 연동 가정. 초과 연금소득은 일반 금융자산에 재적립.`;
  const fmt=r=>r.firstShortfall===null?`${data.end}세까지 부족 없음`:`${ageLabel(r.firstShortfall)}부터 부족`;
  if(!changed)$('comparisonNote').textContent='현재 계획만 표시하고 있어요. 아래 숫자를 바꾸면 변경 계획을 비교할 수 있어요.';
  else if(Math.abs((a.firstShortfall??-1)-(b.firstShortfall??-1))<1/24){
@@ -427,5 +469,5 @@ function draw(a,b,original,changed,showChanged){
  });
  svg.innerHTML=parts.join('');
 }
-function reset(){data={};$('houseOn').checked=false;$('housePrice').value=30000;$('houseAge').value=70;$('houseSpouse').value=0;$('houseInputs').classList.add('hidden');document.querySelector('input[name="irpMode"][value="transfer"]').checked=true;$('irpMonthly').value=0;$('irpRate').value=2.99;$('irpOtherDeduction').value=0;$('irpTaxBand').value='14.85';resetDetails();show('home')}
-</script></body></html>
+function reset(){data={};$('houseOn').checked=false;$('housePrice').value=30000;$('houseAge').value=70;$('houseSpouse').value=0;$('houseInputs').classList.add('hidden');document.querySelector('input[name="irpMode"][value="transfer"]').checked=true;$('irpMonthly').value=0;$('irpRate').value=2.99;$('irpOtherDeduction').value=0;$('irpTaxBand').value='14.85';resetDetails();['pendingMain','pendingIrp','pendingHouse'].forEach(id=>$(id).textContent='');show('home')}
+</script><script>decorateMoneyInputs();</script></body></html>

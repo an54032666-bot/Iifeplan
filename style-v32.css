@@ -1,0 +1,290 @@
+
+:root{font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;color:#182235;background:#f5f7fb}*{box-sizing:border-box}body{margin:0}main{max-width:520px;margin:0 auto;padding:24px 18px 70px}.brand{font-size:18px;font-weight:800;color:#2764e7;margin:14px 0 35px}.card{background:white;border-radius:24px;padding:27px 22px;box-shadow:0 8px 30px #1b3c6910;margin-bottom:16px}h1{font-size:30px;line-height:1.35;letter-spacing:-1px;margin:0 0 12px}h2{font-size:22px;margin:0 0 12px}p{color:#697386;line-height:1.6}.eyebrow{color:#2764e7;font-weight:750;font-size:13px;margin-bottom:12px}.btn{border:0;border-radius:14px;background:#2868ef;color:white;font-weight:750;font-size:16px;padding:16px;width:100%;cursor:pointer}.btn.secondary{background:#eef3ff;color:#2868ef}.row{display:flex;gap:10px}.row>*{flex:1}label{display:block;font-size:15px;font-weight:700;margin:19px 0 8px}input,select{width:100%;padding:14px;border:1px solid #dfe5ef;border-radius:12px;font-size:17px;background:white;color:#182235}small{display:block;color:#8490a0;margin-top:7px;line-height:1.5}.hidden{display:none}.progress{height:6px;background:#e8eef8;border-radius:10px;margin-bottom:25px}.bar{height:100%;background:#2868ef;border-radius:10px;transition:.2s}.stat{background:#f4f7ff;border-radius:16px;padding:18px;margin:12px 0}.stat b{display:block;font-size:25px;margin-top:7px}.chart{width:100%;height:220px}.legend{font-size:12px;color:#64748b}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;background:#2868ef}.dot.alt{background:#ff9f43}.notice{font-size:12px;color:#778397;line-height:1.7}button:disabled{opacity:.4} .pill{display:inline-block;background:#eef4ff;color:#2868ef;padding:7px 11px;border-radius:20px;font-size:13px;font-weight:700}
+/* LifePlan visual refresh — soft, mobile-first financial UX */
+:root{color:#191f28;background:#f7f9fd}
+body{background:linear-gradient(180deg,#edf4ff 0,#f7f9fd 310px,#f7f9fd 100%);min-height:100vh}
+main{max-width:540px;padding:22px 18px 85px}
+.brand{display:flex;align-items:center;gap:9px;color:#2563eb;font-size:19px;letter-spacing:-.6px;margin:9px 0 28px}
+.brand:before{content:"";width:29px;height:29px;border-radius:11px;background:linear-gradient(145deg,#70a6ff,#2764e7);box-shadow:0 5px 14px #367af43b}
+.card{border:1px solid #ffffffd9;box-shadow:0 12px 38px #253b6410;border-radius:27px;padding:29px 24px;margin-bottom:18px}
+#home{padding:38px 27px 31px;min-height:420px;position:relative;overflow:hidden}
+#home:before{content:"";position:absolute;width:210px;height:210px;border-radius:50%;background:radial-gradient(circle,#e2edff 0,#e2edff00 68%);right:-66px;top:-74px;pointer-events:none}
+h1{font-size:clamp(29px,7.5vw,35px);letter-spacing:-1.5px;line-height:1.32}
+h2{font-size:24px;letter-spacing:-.8px;line-height:1.4}
+p{font-size:15px;line-height:1.8;color:#667085}
+.eyebrow{letter-spacing:.1px;color:#3778ed}
+.btn{background:#2874f0;min-height:54px;border-radius:15px;box-shadow:0 6px 16px #3475ed22;transition:transform .13s,background .13s}
+.btn:active{transform:scale(.985);background:#175cce}
+.btn.secondary{box-shadow:none;background:#eef4ff;color:#2764e7}
+.btn.secondary:active{background:#e2ecff}
+input,select{border:1.5px solid #e3e9f3;border-radius:14px;min-height:54px;outline:none;transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus{border-color:#3980f8;box-shadow:0 0 0 4px #3980f817}
+label{font-size:14px}
+.progress{height:7px;background:#edf1f8;margin-bottom:30px}
+.bar{background:linear-gradient(90deg,#6ba7ff,#2868ef)}
+.stat{background:linear-gradient(135deg,#f2f7ff,#f8faff);border:1px solid #e8f0ff;border-radius:19px;padding:20px}
+.stat b{font-size:26px;letter-spacing:-1px;color:#1b4fc2;overflow-wrap:anywhere}
+.pill{background:#eaf2ff;color:#2868ef;padding:9px 13px}
+.chart{margin-top:15px;background:#fbfcff;border-radius:14px;padding:8px}
+.notice{border-top:1px solid #eef1f6;padding-top:13px;margin-top:19px}
+@media(min-width:600px){main{padding-top:36px}}
+@media print{body{background:white}main{max-width:100%;padding:0}.brand,#home,#quiz,.btn,#results>.card:nth-child(2) label,#results>.card:nth-child(2) input{display:none!important}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}}
+
+.details-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;padding:17px 18px;border:1px solid #dfe9fa;background:#f5f8ff;color:#245ac5;border-radius:15px;font-size:16px;font-weight:750;cursor:pointer;margin:18px 0 6px}
+.details-panel{background:#fbfcff;border:1px solid #e7eef8;border-radius:18px;padding:4px 18px 20px;margin-bottom:16px}
+.details-panel h3{font-size:16px;margin:22px 0 7px}.details-panel small{font-size:12px}.details-panel .row label{font-size:12px}.details-panel .row input{font-size:15px;padding:10px}.details-panel select{font-size:15px}.tag{display:inline-block;border-radius:20px;background:#edf4ff;color:#2868ef;font-size:12px;padding:5px 10px}
+@media print{.details-toggle,.details-panel{display:none!important}}
+#actionCard .stat{margin:14px 0}#actionCard .btn{font-size:14px;min-height:44px;padding:12px}#actionCard p{line-height:1.6}
+.pension-choice{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}
+.pension-choice label{display:block;margin:0;cursor:pointer}
+.pension-choice input{position:absolute;opacity:0;width:1px;height:1px;min-height:1px}
+.pension-choice span{display:block;padding:17px 12px;border:2px solid #e6edf7;border-radius:16px;min-height:82px;background:white;line-height:1.55;font-size:14px;font-weight:750}
+.pension-choice small{font-weight:400;font-size:11px;margin-top:3px}
+.pension-choice input:checked+span{background:#edf5ff;border-color:#2874f0;color:#1b55bb}
+.pension-choice input:focus-visible+span{outline:3px solid #98bcff}
+/* Three retirement options: two equal cards above, one full-width below. */
+.worktype-grid>label:last-child{grid-column:1/-1}
+.worktype-grid>label:last-child span{min-height:72px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.worktype-grid>label:last-child small{display:block}
+.extra-fields{background:#f6f9ff;border-radius:16px;padding:16px;margin-top:15px}
+.extra-fields label{margin-top:12px}
+.info-fold{margin-top:13px;border-top:1px solid #edf0f5;padding-top:12px;color:#768398;font-size:12px}.info-fold summary{cursor:pointer;font-weight:700;color:#64748b;list-style:none}.info-fold summary:after{content:" ＋"}.info-fold[open] summary:after{content:" −"}.info-fold p,.info-fold small{font-size:12px;line-height:1.65;margin:9px 0}.stat{margin:10px 0}.card>p{margin:8px 0 17px}
+
+.diagnostic-lines{display:grid;gap:9px;margin-top:11px}.diagnostic-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:1px solid #e7edf5;padding-bottom:9px;font-size:13px;line-height:1.5}.diagnostic-row:last-child{border-bottom:0;padding-bottom:0}.diagnostic-row span{color:#667085;flex:1}.diagnostic-row b{color:#182b49;text-align:right;max-width:57%;overflow-wrap:anywhere}.diagnostic-note{font-size:11px;color:#8290a4;line-height:1.55;margin-top:9px}/* Compact, printable personalized retirement report */
+.report-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}.report-metric{background:#f5f8ff;border:1px solid #e8eef9;border-radius:15px;padding:15px 12px}.report-metric small{font-size:11px;margin:0;color:#667085}.report-metric strong{display:block;margin-top:7px;font-size:20px;color:#245ac5;letter-spacing:-.5px;overflow-wrap:anywhere}.report-verdict{padding:16px;border-radius:16px;background:#edf5ff;border:1px solid #dbe9ff}.report-verdict strong{display:block;color:#2059c4;font-size:19px;margin-bottom:5px}.report-verdict p{margin:0;font-size:13px}.report-next{padding:15px 17px;background:#f8fafc;border-radius:14px;margin-top:13px}.report-next b{font-size:14px}.report-next p{margin:5px 0 0;font-size:13px}.report-meta{font-size:11px;color:#8591a2;line-height:1.6;margin-top:14px}@media print{#reportCard{break-inside:avoid}#reportCard .btn{display:none!important}}
+.house-toggle{display:flex;align-items:center;gap:12px;font-weight:750;margin:20px 0;cursor:pointer}.house-toggle input{width:22px;height:22px;accent-color:#2b76e5}.house-toggle+div{margin-top:8px}#housingCard .stat{margin:18px 0}#housingCard small{display:block;margin:8px 0;line-height:1.65}
+/* Short input guidance directly above the field */
+.quiz-input-hint{font-size:14px;color:#8491a5;line-height:1.65;margin:17px 0 9px;font-weight:400}
+/* Unit suffix stays visible while editing */
+.money-input{position:relative}.money-input input{padding-right:72px}.money-input .money-unit{position:absolute;right:17px;top:50%;transform:translateY(-50%);font-weight:750;font-size:15px;color:#68788f;pointer-events:none}.money-input input:focus+.money-unit{color:#2764e7}
+
+.shortfall-card{margin:12px 0;padding:22px 20px;border-radius:19px;background:linear-gradient(135deg,#fff1f1,#fff8f8);border:1px solid #ffd9dc}
+.shortfall-card .shortfall-caption{font-size:14px;font-weight:800;color:#a82b3d}
+.shortfall-card b{display:block;font-size:34px;letter-spacing:-1.5px;color:#df354b;margin:8px 0}
+.shortfall-card small{color:#8c5a62;font-size:12px}
+.shortfall-card.changed{background:linear-gradient(135deg,#fff4e6,#fffbf5);border-color:#ffdfb9}
+.shortfall-card.changed .shortfall-caption,.shortfall-card.changed b{color:#cf7116}
+.shortfall-card.changed small{color:#a4764e}
+.apply-result{margin:20px 0 6px}
+.pending-hint{color:#d36a19;font-weight:700;min-height:18px}
+
+/* v6: 미래 변경 섹션을 IRP처럼 요약→펼치기 구조로 구성 */
+.future-preview{margin:18px 0 16px;background:#f4f8ff;border:1px solid #e0eafc}
+.future-preview small{display:block;margin-top:9px}
+.future-toggle{display:block;width:100%;border:0;border-radius:17px;padding:19px 14px;background:#eaf1ff;color:#245ec5;font:inherit;font-weight:800;cursor:pointer;margin-bottom:12px}
+#futureSettings:not(.hidden){padding-top:6px}
+
+/* v7: 미래 계획 예시를 설정 전 비교 카드로 노출 */
+.future-preview-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:15px 0;}
+.future-preview-grid>div{background:#fff;border:1px solid #dce6f6;border-radius:12px;padding:12px;}
+.future-preview-grid small{display:block;margin:0 0 6px;color:#7d899a;}
+.future-preview-grid strong{display:block;font-size:15px;color:#22375d;line-height:1.5;}
+#futurePreviewGain{font-size:clamp(23px,5vw,32px);color:#245fc8;}
+@media(max-width:390px){.future-preview-grid{grid-template-columns:1fr;}}
+
+/* v8: prevent overlapping SVG annotation labels */
+.graph-events{display:grid;gap:8px;margin:14px 0 6px}
+.graph-event{padding:10px 12px;border-left:4px solid #2d6cdf;background:#f5f8ff;border-radius:8px;color:#31425d;font-size:13px;line-height:1.55;overflow-wrap:anywhere}
+.irp-pv{display:block;color:#2958a3;font-weight:700;margin:10px 0 3px}
+.chart{max-width:100%;overflow:visible}
+
+/* v9: investment comparison note readability */
+#cashflowAuditV20261030{line-height:1.85;overflow-wrap:anywhere;}
+
+/* v10 IRP preview legibility */
+#irpPreviewDesc{display:block;line-height:1.75;overflow-wrap:anywhere}#irpPreviewPV{display:block;line-height:1.55;margin-top:8px}
+
+/* v12: 긴 검증 설명은 마지막 참고 접기 섹션으로 이동 */
+.reference-card{margin-top:22px}.reference-card .info-fold{margin:0}.reference-card #referenceAudit{overflow-wrap:anywhere;line-height:1.7;margin-top:14px}.reference-card #referenceAudit .notice{font-size:13px;line-height:1.7;color:#66768e}.reference-card summary{cursor:pointer;font-weight:700}.reference-card #irpComparisonNote{font-size:13px!important}
+
+/* Restored Naver Form feedback card */
+.survey-card{margin-top:18px}
+.survey-link{display:block;text-align:center;text-decoration:none;margin:16px 0 12px;box-sizing:border-box}
+.survey-card small{display:block;color:#7f8ba2}
+
+.recovery-explain{margin:12px 0 0;padding:14px 16px;background:#f5f8ff;border:1px solid #dfe9ff;border-radius:14px;font-size:13px;line-height:1.65;color:#344562}
+.graph-events{display:grid;gap:8px;margin-top:12px}
+.graph-events>div{overflow-wrap:anywhere}
+
+/* v14: restore retirement income-gap analysis cards only */
+.graph-events{display:grid;gap:12px;margin:16px 0 0}
+.gap-event-group{background:#fff;border:1px solid #dfe7f4;border-radius:16px;padding:15px 14px}
+.gap-event-group h3{font-size:14px;margin:0 0 12px;font-weight:800}
+.gap-event-item{border-left:3px solid;padding:1px 0 10px 12px;margin:0 0 4px}
+.gap-event-item:last-child{padding-bottom:0;margin-bottom:0}
+.gap-event-item strong{display:block;font-size:13px;line-height:1.5}
+.gap-event-item p{font-size:12px;line-height:1.65;margin:4px 0 0;color:#66768e}
+.gap-no-events{background:#fff;border:1px solid #dfe7f4;border-radius:14px;padding:13px;font-size:12px;margin:0}
+
+/* Current-plan summary uses the same blue identity as the chart. */
+.shortfall-card:not(.changed){background:linear-gradient(135deg,#eef5ff,#f7faff);border-color:#d6e6ff}
+.shortfall-card:not(.changed) .shortfall-caption{color:#245fc8}
+.shortfall-card:not(.changed) b{color:#2868ef}
+.shortfall-card:not(.changed) small{color:#607fae}
+
+.housing-eligibility{display:block;margin:12px 0 15px;color:#245fc8;font-weight:600;line-height:1.55}.housing-age-error{display:block;color:#d73535;font-weight:600;line-height:1.5}.housing-age-error:empty{display:none}#houseAge[aria-invalid="true"]{border-color:#e66b6b}
+
+/* v18: consistent plan identities: current blue, changed green, asset total slate. */
+#results > .card:first-child > .stat:first-of-type{background:linear-gradient(135deg,#f1f5f9,#f8fafc);border:1px solid #dce4ee}
+#atRetire{color:#334155}
+#workPensionSummary{color:#64748b}
+.shortfall-card.changed{background:linear-gradient(135deg,#eafaf2,#f6fdf9);border-color:#bcebd4}
+.shortfall-card.changed .shortfall-caption,.shortfall-card.changed b{color:#138457}
+.shortfall-card.changed small{color:#4b8971}
+.dot.alt{background:#18a66a}
+
+/* v19: housing market-price advisory and distinct overlaid comparison lines */
+.housing-price-error{display:block;color:#d73535;font-weight:600;line-height:1.55;margin-top:7px}.housing-price-error:empty{display:none}#housePrice[aria-invalid="true"]{border-color:#e66b6b;outline-color:#e66b6b}
+.legend .dot.alt{width:17px;height:0;border-radius:0;border-top:3px dashed #18a66a;background:none;vertical-align:middle}
+
+
+/* v20 — unified LifePlan design system. Existing finance calculations are unchanged. */
+:root{
+  --lp-blue:#2868ef;--lp-blue-dark:#2057cb;--lp-blue-soft:#eef5ff;--lp-blue-border:#d7e6ff;
+  --lp-green:#16865a;--lp-green-strong:#128154;--lp-green-soft:#eaf9f1;--lp-green-border:#bfe7d2;
+  --lp-ink:#182235;--lp-muted:#64748b;--lp-subtle:#8290a4;--lp-border:#e0e8f2;
+  --lp-surface:#ffffff;--lp-surface-soft:#f6f9ff;--lp-bg:#f7f9fd;
+  --lp-radius:16px;--lp-radius-lg:22px;--lp-space:16px;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  color:var(--lp-ink);font-size:15px;
+}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{color:var(--lp-ink);font-family:inherit;line-height:1.55}
+main{width:100%;max-width:540px;padding-inline:16px}
+.card{padding:26px 23px;border-radius:var(--lp-radius-lg);border:1px solid #edf1f7;margin-bottom:16px;box-shadow:0 9px 30px #253b640e}
+h1{font-size:clamp(28px,7vw,35px);line-height:1.34;letter-spacing:-1.2px}
+h2{font-size:clamp(20px,5.2vw,23px);line-height:1.4;letter-spacing:-.65px}
+h3{line-height:1.45;letter-spacing:-.2px}
+p{font-size:14px;line-height:1.72;color:var(--lp-muted)}
+label{font-size:14px;line-height:1.5;color:var(--lp-ink);margin:18px 0 8px}
+small,.notice,.diagnostic-note{font-size:12px;line-height:1.65;color:var(--lp-subtle)}
+input:not([type=checkbox]):not([type=radio]):not([type=range]),select{font-family:inherit;font-size:16px;min-height:54px;padding:13px 15px;border-radius:14px;border:1.5px solid var(--lp-border);background:#fff;color:var(--lp-ink);max-width:100%}
+input:not([type=checkbox]):not([type=radio]):not([type=range]):focus,select:focus{border-color:var(--lp-blue);box-shadow:0 0 0 3px #2868ef1a;outline:none}
+input[aria-invalid="true"]:not([type=checkbox]):not([type=radio]){border-color:#df5757!important;box-shadow:0 0 0 2px #df575712}
+input[type=checkbox],input[type=radio],input[type=range]{accent-color:var(--lp-blue)}
+.btn,.future-toggle,.details-toggle{font-family:inherit;font-size:15px;font-weight:750;line-height:1.4;border-radius:14px;min-height:52px}
+.btn{background:var(--lp-blue);box-shadow:0 5px 14px #2868ef1a}
+.btn.secondary,.future-toggle,.details-toggle{background:#edf4ff;color:var(--lp-blue-dark);box-shadow:none}
+.btn:focus-visible,.future-toggle:focus-visible,.details-toggle:focus-visible,.info-fold summary:focus-visible{outline:3px solid #96b8ff;outline-offset:2px}
+.details-toggle,.future-toggle{padding:15px 16px;margin-block:16px 10px}
+.details-panel{border-radius:var(--lp-radius);padding:8px 16px 18px;background:#f9fbff}
+.extra-fields{background:#f6f9ff;border:1px solid #eaf0fa;border-radius:var(--lp-radius)}
+.stat,.future-preview,.report-metric,.report-verdict,.report-next,.recovery-explain{border-radius:var(--lp-radius);padding:18px;margin-block:12px}
+.stat{border:1px solid #e3ecfb;background:#f4f8ff;font-size:14px;line-height:1.6}
+.stat b{font-size:clamp(22px,5.8vw,27px);line-height:1.3;letter-spacing:-.75px;margin-top:6px}
+.shortfall-card{padding:20px 19px;border-radius:var(--lp-radius);margin:12px 0}
+.shortfall-card:not(.changed){background:var(--lp-blue-soft);border-color:var(--lp-blue-border)}
+.shortfall-card:not(.changed) .shortfall-caption,.shortfall-card:not(.changed) b{color:var(--lp-blue)}
+.shortfall-card.changed{background:var(--lp-green-soft);border-color:var(--lp-green-border)}
+.shortfall-card.changed .shortfall-caption,.shortfall-card.changed b{color:var(--lp-green)}
+.shortfall-card b{font-size:clamp(26px,7vw,34px);line-height:1.25;letter-spacing:-1px;overflow-wrap:anywhere}
+.shortfall-card small{line-height:1.6}
+#results>.card:first-child>.stat:first-of-type{background:#f3f6fa;border-color:#dce4ee}
+#atRetire{color:#334155}
+#changedDetails .stat{background:var(--lp-green-soft);border-color:var(--lp-green-border)}
+#changedDetails .stat b{color:var(--lp-green)}
+#changedStatusCard .shortfall-caption{color:var(--lp-green)}
+.future-preview-grid{gap:10px}.future-preview-grid>div{border-radius:12px;padding:13px}
+.future-preview-grid strong{font-size:14px;overflow-wrap:anywhere}
+.pension-choice span{border-radius:14px}
+.pill,.tag{background:#eaf2ff;color:var(--lp-blue-dark)}
+.gap-event-group{border-radius:var(--lp-radius);padding:16px}
+.graph-event{border-radius:12px}
+.chart{display:block;width:100%;height:auto;aspect-ratio:460/260;max-width:100%;padding:6px;background:#fafcff;border-radius:var(--lp-radius)}
+.legend{display:flex;flex-wrap:wrap;align-items:center;gap:7px 5px;font-size:12px;line-height:1.8;margin-top:8px}
+.dot.alt{background:none;border-top:3px dashed var(--lp-green);width:17px;height:0;border-radius:0}
+.housing-eligibility{color:var(--lp-blue-dark);font-size:12px;font-weight:650;line-height:1.6}
+.housing-age-error,.housing-price-error{color:#d73535;font-size:12px;font-weight:650}
+.money-input .money-unit{font-size:14px}
+.info-fold{font-size:12px;line-height:1.6}
+.info-fold summary{line-height:1.5}
+#housingCard .stat,#irpCard .stat{margin-block:14px}
+.survey-link{display:flex;align-items:center;justify-content:center}
+#results .row,#futureSettings .row,.details-panel .row{min-width:0}
+.row>*{min-width:0}
+@media(max-width:420px){main{padding:16px 12px 64px}.card{padding:23px 18px;border-radius:20px}.brand{margin-bottom:22px}.row{gap:8px}.details-panel{padding:7px 12px 16px}.future-preview-grid{gap:8px}.future-preview-grid>div{padding:11px}.shortfall-card{padding:18px 16px}.report-grid{gap:8px}}
+@media(max-width:350px){.future-preview-grid,.report-grid{grid-template-columns:1fr}.pension-choice{gap:7px}.pension-choice span{padding:12px 8px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+@media print{.card{box-shadow:none!important;border:1px solid #dfe5ee!important}body{background:white!important}}
+
+/* v21: full-spending status uses violet; plan identities remain blue/green. */
+.legend .dot.alt,.dot.alt{background:#18a66a;border:0;width:11px;height:11px;border-radius:50%;vertical-align:middle}
+
+/* v22: Equal-height IRP contribution choices on mobile and desktop */
+#irpSettingsPanel .pension-choice{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}
+#irpSettingsPanel .pension-choice>label{display:flex;min-width:0;height:100%;margin:0}
+#irpSettingsPanel .pension-choice>label>span{display:flex;flex:1;min-width:0;min-height:112px;flex-direction:column;justify-content:center;overflow-wrap:anywhere;word-break:keep-all;padding:14px 12px}
+#irpSettingsPanel .pension-choice>label>span small{display:block;margin-top:6px}
+@media(max-width:350px){#irpSettingsPanel .pension-choice>label>span{padding:12px 9px;font-size:12px}}
+
+/* v23: current and changed lines are both solid; overlapping strokes remain distinguishable. */
+.legend .dot.alt,.dot.alt{background:#18a66a;border:0;width:11px;height:11px;border-radius:50%}
+
+/* v24: consistent IRP choice typography and mint full-spending status */
+#irpSettingsPanel .pension-choice>label>span{
+  justify-content:flex-start;min-height:116px;padding:18px 12px 14px;
+  font-size:14px;line-height:1.55;font-weight:750;
+}
+#irpSettingsPanel .pension-choice>label>span small{
+  display:block;margin-top:8px;font-size:12px;line-height:1.5;font-weight:400;
+}
+#irpSettingsPanel .pension-choice>label{align-self:stretch}
+@media(max-width:350px){#irpSettingsPanel .pension-choice>label>span{padding:15px 9px 12px;font-size:12px}}
+/* Changed-plan legend now represents a solid green stroke. */
+.legend .dot.alt,.dot.alt{display:inline-block;width:17px;height:0;border:0;border-top:3px solid #18a66a;border-radius:0;background:none;vertical-align:middle}
+
+/* v25 — Align the complete IRP card text blocks, not just outer card heights. */
+#irpSettingsPanel .pension-choice>label>span{display:grid;grid-template-rows:minmax(44px,auto) auto 1fr;align-content:start;justify-content:stretch;gap:0;min-height:116px;padding:16px 12px 14px}
+#irpSettingsPanel .pension-choice .irp-choice-title{display:block;margin:0;font:inherit;font-size:14px;font-weight:750;line-height:1.55;letter-spacing:-.15px;word-break:keep-all;overflow-wrap:anywhere}
+#irpSettingsPanel .pension-choice>label>span small{align-self:start;margin:6px 0 0;font-size:12px;line-height:1.5;font-weight:400}
+@media(max-width:350px){#irpSettingsPanel .pension-choice>label>span{padding:14px 9px 12px;grid-template-rows:minmax(42px,auto) auto 1fr}#irpSettingsPanel .pension-choice .irp-choice-title{font-size:12px}}
+/* Warning and recovery states are independent of plan identity. */
+.shortfall-card.changed{background:#fff9e6;border-color:#f5d77b}
+.shortfall-card.changed .shortfall-caption,.shortfall-card.changed b{color:#b77900}
+
+/* v26: shortage is pale warm yellow throughout; recovery remains green. */
+.shortfall-card.changed{background:#fffdf5;border-color:#f5e8bd}
+.shortfall-card.changed .shortfall-caption,.shortfall-card.changed b{color:#ad780d}
+.shortfall-card.changed small{color:#8e7848}
+/* Keep current-plan summary blue and the changed-plan shortage summary pale yellow. */
+.shortfall-card:not(.changed){background:#eef5ff;border-color:#d6e6ff}
+.shortfall-card:not(.changed) .shortfall-caption,.shortfall-card:not(.changed) b{color:#2868ef}
+.shortfall-card:not(.changed) small{color:#607fae}
+
+/* v28 — Consistent warm-yellow changed-plan identity; green reserved for recovery. */
+:root{--lp-changed:#c48b12;--lp-changed-line:#e6aa22;--lp-changed-soft:#fffdf4;--lp-changed-border:#f4e6b7}
+.shortfall-card.changed{background:var(--lp-changed-soft)!important;border-color:var(--lp-changed-border)!important}
+.shortfall-card.changed .shortfall-caption,.shortfall-card.changed b,.shortfall-card.changed small{color:var(--lp-changed)!important}
+#changedStatusCard .shortfall-caption{color:var(--lp-changed)!important}
+#changedDetails .stat{background:var(--lp-changed-soft);border-color:var(--lp-changed-border)}
+#changedDetails .stat b{color:var(--lp-changed)}
+.legend .dot.alt,.dot.alt{border-top:3px solid var(--lp-changed-line)!important;background:none!important}
+/* Remove native number steppers that overlap the unit badges on narrow screens. */
+input[type=number]{-moz-appearance:textfield;appearance:textfield}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;appearance:none;margin:0}
+
+/* v29: shortage events orange; changed-plan graph stroke yellow (same as markers). */
+.legend .dot.alt,.dot.alt{border-top-color:#e6aa22!important}
+
+/* v30: swap plan identity colors only; event severity colors unchanged. */
+:root{--lp-current:#b77900;--lp-current-line:#e6aa22;--lp-current-soft:#fffdf4;--lp-current-border:#f4e6b7;--lp-changed:#2868ef;--lp-changed-line:#2868ef;--lp-changed-soft:#eef5ff;--lp-changed-border:#d6e6ff}
+.shortfall-card:not(.changed){background:var(--lp-current-soft)!important;border-color:var(--lp-current-border)!important}
+.shortfall-card:not(.changed) .shortfall-caption,.shortfall-card:not(.changed) b,.shortfall-card:not(.changed) small{color:var(--lp-current)!important}
+.shortfall-card.changed{background:var(--lp-changed-soft)!important;border-color:var(--lp-changed-border)!important}
+.shortfall-card.changed .shortfall-caption,.shortfall-card.changed b,.shortfall-card.changed small{color:var(--lp-changed)!important}
+#changedStatusCard .shortfall-caption{color:var(--lp-changed)!important}
+#changedDetails .stat{background:var(--lp-changed-soft)!important;border-color:var(--lp-changed-border)!important}
+#changedDetails .stat b{color:var(--lp-changed)!important}
+.legend>.dot:not(.alt){background:var(--lp-current-line)!important}
+.legend .dot.alt,.dot.alt{border-top-color:var(--lp-changed-line)!important}
+
+/* v31: pale lemon current-plan identity vs saturated orange shortage events. */
+:root{--lp-current:#947300;--lp-current-line:#d4ad2c;--lp-current-soft:#fffef6;--lp-current-border:#f2e8bf}
+.shortfall-card:not(.changed){background:#fffef6!important;border-color:#f2e8bf!important}
+.shortfall-card:not(.changed) .shortfall-caption,.shortfall-card:not(.changed) b{color:#947300!important}
+.shortfall-card:not(.changed) small{color:#81764d!important}
+.legend>.dot:not(.alt){background:#d4ad2c!important}
+/* Event status: orange only for partial shortfall, not plan identity. */
+.gap-event-item{border-left-width:3px}
+
+.value-basis{font-size:12px;color:#526787;background:#edf4ff;border:1px solid #d6e5fa;border-radius:12px;padding:12px 14px;margin:0 0 16px;line-height:1.65}

@@ -153,22 +153,31 @@ function housePresentValue(nominal, startAge, personAge, inflationRate){
  const elapsed=Math.max(0,startAge-personAge+1/12);
  return nominal/Math.pow(1+inflationRate/100,elapsed);
 }
+function presentValueAtRetirement(nominal, d){
+ const years=Math.max(0, Number(d.retire)-Number(d.age));
+ return nominal/Math.pow(1+Number(d.inflationRate)/100,years);
+}
 function updateExperimentPreviews(base){
  const saving=Math.max(0,Number($('save2').value)||0);
- const example=Math.min(saving,150);
- const irpBase={...base,houseOn:false,houseMonthly:0,irpMonthly:0,irpRate:3};
- const choice={...irpBase,save:saving-example,irpMonthly:example,irpRate:4.48};
+ const entered=Math.max(0,Number($('irpMonthly').value)||0);
+ const irpMode=document.querySelector('input[name="irpMode"]:checked')?.value||'transfer';
+ const selectedRate=Number($('irpRate').value);
+ const usingSettings=entered>0;
+ const example=usingSettings?Math.min(entered,150):Math.min(saving,150);
+ const rate=usingSettings?selectedRate:4.48;
+ const effectiveMode=usingSettings?irpMode:'transfer';
+ const irpBase={...base,houseOn:false,houseMonthly:0,irpMonthly:0,irpRate:base.preRate};
  const before=simulate({...irpBase,save:saving});
+ const choice={...irpBase,save:effectiveMode==='transfer'?saving-example:saving,irpMonthly:example,irpRate:rate};
  const after=simulate(choice);
- const increase=after.atRetire-before.atRetire;
- const futureIncreaseRate=0.2;
- const futureAfter=simulate({...irpBase,save:saving*(1+futureIncreaseRate)});
- const futureGain=futureAfter.atRetire-before.atRetire;
+ const increase=presentValueAtRetirement(after.atRetire-before.atRetire,irpBase);
+ const futureAfter=simulate({...irpBase,save:saving*1.2});
+ const futureGain=presentValueAtRetirement(futureAfter.atRetire-before.atRetire,irpBase);
  $('futurePreviewGain').textContent=(futureGain>=0?'+':'')+money(futureGain);
- $('futurePreviewDesc').textContent=`예시: 월 ${money(saving)} → ${money(saving*1.2)} (20% 증액) · 은퇴 시점 총자산 차이 · 연 3% 운용 가정 · 아직 미적용`;
-
+ $('futurePreviewDesc').textContent=`예시: 월 ${money(saving)} → ${money(saving*1.2)} (20% 증액) · 현재 ${base.age}세 구매력 기준 · 은퇴 ${base.retire}세 · 연 ${base.inflationRate}% 물가 반영 · 아직 미적용`;
  $('irpPreviewGain').textContent=(increase>=0?'+':'')+money(increase);
- $('irpPreviewDesc').textContent=`예시: 월 ${money(example)}을 일반 저축(연 3%)에서 IRP 실적배당형(연 4.48% 가정)으로 이동 · 은퇴 시점 총자산 차이 · 별도 납입 없음 · 아직 미적용`;
+ const source=effectiveMode==='transfer'?`기존 예적금에서 월 ${money(example)} 이전 · 총저축 동일`:`IRP에 월 ${money(example)} 추가 납입`;
+ $('irpPreviewDesc').textContent=`${usingSettings?'선택 설정 미리보기':'기본 예시'}: ${source} · 일반 연 ${base.preRate}% / IRP 연 ${rate}% · ${base.retire}세 자산 차이를 현재 ${base.age}세 구매력으로 환산(물가 연 ${base.inflationRate}%) · ${usingSettings?'결과 변경하기를 눌러 최종 그래프에 적용':'아직 미적용'}`;
  const housePrice=50000,age=70,growthRate=2;
  const forecastPrice=futureHousePrice(housePrice,base.age,age,growthRate);
  const houseNominal=houseEstimate(age,forecastPrice);
@@ -183,6 +192,9 @@ function markPending(el){
  const irp=el?.closest?.('#irpCard');
  const target=house?'pendingHouse':irp?'pendingIrp':'pendingMain';
  const hint=$(target);if(hint)hint.textContent='변경사항이 있어요. 버튼을 누르면 결과에 반영돼요.';
+ if(irp && typeof data==='object' && Number.isFinite(Number(data.age)) && Number.isFinite(Number(data.retire))){
+   try{updateExperimentPreviews({...data,...settings(),save:Number($('save2').value),retire:Number($('retire2').value),spend:Number($('spend2').value),pension:Number($('pension2').value)});}catch(_e){}
+ }
 }
 function applyResults(){
  recalc();
@@ -210,16 +222,16 @@ function recalc(){
  $('irpValidation').textContent='';
  let baseline={...data,...defaults,houseOn:false,houseMonthly:0,irpMonthly:0,irpRate:3,pension:data.noPension?0:(data.pension===0?AVG_PENSION:data.pension)};
  let a=simulate(baseline),b=simulate(d);
- updateExperimentPreviews(baseline);
+ updateExperimentPreviews({...baseline,age:d.age,retire:d.retire,spend:d.spend,end:d.end,preRate:d.preRate,postRate:d.postRate,inflationRate:d.inflationRate,pension:d.pension,pensionStart:d.pensionStart,privatePension:d.privatePension,privateStart:d.privateStart,privateEnd:d.privateEnd,ageSpending:d.ageSpending,spend70:d.spend70,spend80:d.spend80,spend90:d.spend90,dcRate:d.dcRate});
  const changed=houseOn||irpMonthly>0||Math.abs(displayedSaving-data.save)>1e-8||Math.abs(d.retire-data.retire)>1e-8||Math.abs(d.spend-data.spend)>1e-8||Math.abs(d.pension-baseline.pension)>0.051||fields.some(k=>(k!=='irpRateDetail'||irpMonthly>0)&&Math.abs(d[k]-defaults[k])>1e-8)||d.ageSpending!==defaults.ageSpending;
  ['changedStatusCard','changedLegend','changedDetails'].forEach(k=>$(k).classList.toggle('hidden',!changed));
  $('editHint').classList.toggle('hidden',changed);$('editHint').textContent='조건을 수정한 뒤 ‘결과 변경’ 버튼을 눌러주세요.';
  $('pensionNote').textContent='최초 입력: '+(data.noPension?'연금 미수령(0원)':data.pension===0?'국민연금 통계 평균 약 64.8만원 자동 적용':'직접 입력 '+data.pension+'만원')+' · 변경 시 주황색 계획에 반영돼요.';
- $('atRetire').textContent=money(a.atRetire);
+ $('atRetire').textContent=money(presentValueAtRetirement(a.atRetire,baseline));
  $('workPensionSummary').textContent=data.workType==='db'?`DB형 예상 퇴직급여 ${money(a.workAtRetire)} 포함 · 세전 단순 추정`:
  data.workType==='dc'?`DC형 예상 퇴직급여 ${money(a.workAtRetire)} 포함 · 연 3% 기본 수익률 가정`:
  '퇴직급여 계산 제외';
- $('irpBalance').textContent=money(b.irpAtRetire);
+ $('irpBalance').textContent=money(presentValueAtRetirement(b.irpAtRetire,d));
  $('irpCurrentSaving').textContent=money(displayedSaving);
  $('irpAllocation').textContent=irpMode==='transfer'?`일반 저축 ${money(d.save)} + IRP ${money(irpMonthly)} = 월 총 ${money(displayedSaving)} (기존 저축 유지)`:`일반 저축 ${money(displayedSaving)} + IRP ${money(irpMonthly)} = 월 총 ${money(displayedSaving+irpMonthly)} (추가 저축)`;
  const deduction=Math.max(0,Math.min(irpMonthly*12,900-irpOtherDeduction));
@@ -238,8 +250,8 @@ function recalc(){
 
  $('status').textContent=a.firstShortfall===null?`${data.end}세까지 충당 가능`:`${ageLabel(a.firstShortfall)}부터`; 
  $('statusChanged').textContent=b.firstShortfall===null?`${data.end}세까지 충당 가능`:`${ageLabel(b.firstShortfall)}부터`; 
- $('newAsset').textContent=money(b.atRetire);
- let diff=b.ending-a.ending;$('delta').textContent=(diff>=0?'+':'')+money(diff);
+ $('newAsset').textContent=money(presentValueAtRetirement(b.atRetire,d));
+ let diff=b.ending-a.ending;$('delta').textContent=(diff>=0?'+':'')+money(diff/Math.pow(1+d.inflationRate/100,Math.max(0,d.end-d.age)));
  $('summary').textContent='';
  $('graphNote').textContent=`월별 계산 · 현재 가치 표시 · 주택연금 정액형은 명목 월지급액 고정, 월별 물가로 현재가치 환산(이중 할인 없음) · 국민연금 65세 개시 · 기본 수익률 연 3% · 물가 연 2%. DB·DC 퇴직급여는 은퇴 시 세전 일시금 합산. 입력 연금은 물가 연동 가정. 초과 연금소득은 일반 금융자산에 재적립.`;
  const fmt=r=>r.firstShortfall===null?`${data.end}세까지 부족 없음`:`${ageLabel(r.firstShortfall)}부터 부족`;
